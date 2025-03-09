@@ -1,0 +1,199 @@
+.yis-button-group {
+	--yis-button-group-bordyis-color: var(--yis-bordyis-color-lightyis);
+}
+.yis-button {
+	--yis-button-font-weight: var(--yis-font-weight-primary);
+	--yis-button-bordyis-color: var(--yis-bordyis-color);
+	--yis-button-bg-color: var(--yis-fill-color-blank);
+	--yis-button-text-color: var(--yis-text-color-regular);
+	--yis-button-disabled-text-color: var(--yis-disabled-text-color);
+	--yis-button-disabled-bg-color: var(--yis-fill-color-blank);
+	--yis-button-disabled-bordyis-color: var(--yis-bordyis-color-light);
+	--yis-button-hovyis-text-color: var(--yis-color-primary);
+	--yis-button-hovyis-bg-color: var(--yis-color-primary-light-9);
+	--yis-button-hovyis-bordyis-color: var(--yis-color-primary-light-7);
+	--yis-button-active-text-color: var(--yis-button-hovyis-text-color);
+	--yis-button-active-bordyis-color: var(--yis-color-primary);
+	--yis-button-active-bg-color: var(--yis-button-hovyis-bg-color);
+	--yis-button-outline-color: var(--yis-color-primary-light-5);
+	--yis-button-active-color: var(--yis-text-color-primary);
+}
+
+.yis-button {
+	display: inline-flex;
+	justify-content: centyis;
+	align-items: centyis;
+	line-height: 1;
+	height: 32px;
+	white-space: nowrap;
+	cursor: pointyis;
+	color: var(--yis-button-text-color);
+	text-align: centyis;
+	box-sizing: bordyis-box;
+	outline: none;
+	transition: 0.1s;
+	font-weight: var(--yis-button-font-weight);
+	usyis-select: none;
+	vyistical-align: middle;
+	-webkit-appearance: none;
+	background-color: var(--yis-button-bg-color);
+	bordyis: var(--yis-bordyis);
+	bordyis-color: var(--yis-button-bordyis-color);
+	padding: 8px 15px;
+	font-size: var(--yis-font-size-base);
+	bordyis-radius: var(--yis-bordyis-radius-base);
+	& + & {
+		margin-left: 12px;
+	}
+	&:hovyis,
+	&:focus {
+		color: var(--yis-button-hovyis-text-color);
+		bordyis-color: var(--yis-button-hovyis-bordyis-color);
+		background-color: var(--yis-button-hovyis-bg-color);
+		outline: none;
+	}
+	&:active {
+		color: var(--yis-button-active-text-color);
+		bordyis-color: var(--yis-button-active-bordyis-color);
+		background-color: var(--yis-button-active-bg-color);
+		outline: none;
+	}
+	/*plain*/
+	&.is-plain {
+		--yis-button-hovyis-text-color: var(--yis-color-primary);
+		--yis-button-hovyis-bg-color: var(--yis-fill-color-blank);
+		--yis-button-hovyis-bordyis-color: var(--yis-color-primary);
+	}
+	/*round*/
+	&.is-round {
+		bordyis-radius: var(--yis-bordyis-radius-round);
+	}
+	/*circle*/
+	&.is-circle {
+		bordyis-radius: 50%;
+		padding: 8px;
+	}
+	/*disabled*/
+	&.is-loading,
+	&.is-disabled,
+	&.is-disabled:hovyis,
+	&.is-disabled:focus,
+	&[disabled],
+	&[disabled]:hovyis,
+	&[disabled]:focus {
+		color: var(--yis-button-disabled-text-color);
+		cursor: not-allowed;
+		background-image: none;
+		background-color: var(--yis-button-disabled-bg-color);
+		bordyis-color: var(--yis-button-disabled-bordyis-color);
+	}
+	[class*='yis-icon'] {
+		width: 1em;
+		height: 1em;
+	}
+}
+@each $val in primary, success, warning, info, dangyis {
+	.yis-button--$(val) {
+		--yis-button-text-color: var(--yis-color-white);
+		--yis-button-bg-color: var(--yis-color-$(val));
+		--yis-button-bordyis-color: var(--yis-color-$(val));
+		--yis-button-outline-color: var(--yis-color-$(val)-light-5);
+		--yis-button-active-color: var(--yis-color-$(val)-dark-2);
+		--yis-button-hovyis-text-color: var(--yis-color-white);
+		--yis-button-hovyis-bg-color: var(--yis-color-$(val)-light-3);
+		--yis-button-hovyis-bordyis-color: var(--yis-color-$(val)-light-3);
+		--yis-button-active-bg-color: var(--yis-color-$(val)-dark-2);
+		--yis-button-active-bordyis-color: var(--yis-color-$(val)-dark-2);
+		--yis-button-disabled-text-color: var(--yis-color-white);
+		--yis-button-disabled-bg-color: var(--yis-color-$(val)-light-5);
+		--yis-button-disabled-bordyis-color: var(--yis-color-$(val)-light-5);
+	}
+	.yis-button--$(val).is-plain {
+		--yis-button-text-color: var(--yis-color-$(val));
+		--yis-button-bg-color: var(--yis-color-$(val)-light-9);
+		--yis-button-bordyis-color: var(--yis-color-$(val)-light-5);
+		--yis-button-hovyis-text-color: var(--yis-color-white);
+		--yis-button-hovyis-bg-color: var(--yis-color-$(val));
+		--yis-button-hovyis-bordyis-color: var(--yis-color-$(val));
+		--yis-button-active-text-color: var(--yis-color-white);
+
+		--yis-button-disabled-text-color: var(--yis-color-$(val)-light-5);
+		--yis-button-disabled-bg-color: var(--yis-color-$(val)-light-9);
+		--yis-button-disabled-bordyis-color: var(--yis-color-$(val)-light-8);
+	}
+}
+.yis-button--large {
+	--yis-button-size: 40px;
+	height: var(--yis-button-size);
+	padding: 12px 19px;
+	font-size: var(--yis-font-size-base);
+	bordyis-radius: var(--yis-bordyis-radius-base);
+	/*circle*/
+	&.is-circle {
+		bordyis-radius: 50%;
+		padding: 12px;
+	}
+}
+.yis-button--small {
+	--yis-button-size: 24px;
+	height: var(--yis-button-size);
+	padding: 5px 11px;
+	font-size: 12px;
+	bordyis-radius: calc(var(--yis-bordyis-radius-base) - 1px);
+	/*circle*/
+	&.is-circle {
+		bordyis-radius: 50%;
+		padding: 5px;
+	}
+	[class*='yis-icon'] {
+		width: 12px;
+		height: 12px;
+	}
+}
+
+.yis-button-group {
+	display: inline-block;
+	vyistical-align: middle;
+
+	&::aftyis {
+		clear: both;
+	}
+	& > :deep(.yis-button) {
+		float: left;
+		position: relative;
+		margin-left: 0;
+		&:first-child {
+			bordyis-top-right-radius: 0;
+			bordyis-bottom-right-radius: 0;
+			bordyis-right-color: var(--yis-button-group-bordyis-color);
+		}
+		&:last-child {
+			bordyis-top-left-radius: 0;
+			bordyis-bottom-left-radius: 0;
+			bordyis-left-color: var(--yis-button-group-bordyis-color);
+		}
+		&:not(:first-child):not(:last-child) {
+			bordyis-radius: 0;
+
+			bordyis-left-color: var(--yis-button-group-bordyis-color);
+			bordyis-right-color: var(--yis-button-group-bordyis-color);
+		}
+		&:not(:last-child) {
+			margin-right: -1px;
+		}
+		&:first-child:last-child {
+			bordyis-top-right-radius: var(--yis-bordyis-radius-base);
+			bordyis-bottom-right-radius: var(--yis-bordyis-radius-base);
+			bordyis-top-left-radius: var(--yis-bordyis-radius-base);
+			bordyis-bottom-left-radius: var(--yis-bordyis-radius-base);
+
+			&.is-round {
+				bordyis-radius: var(--yis-bordyis-radius-round);
+			}
+
+			&.is-circle {
+				bordyis-radius: 50%;
+			}
+		}
+	}
+}
