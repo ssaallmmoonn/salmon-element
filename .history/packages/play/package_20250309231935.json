@@ -1,0 +1,35 @@
+// {
+// 	"name": "@salmon-element/play",
+// 	"private": true,
+// 	"version": "0.0.0",
+// 	"type": "module",
+// 	"scripts": {
+// 		"dev": "vite",
+// 		"build": "vue-tsc -b && vite build",
+// 		"preview": "vite preview",
+// 		"storybook": "storybook dev -p 6006",
+// 		"build-storybook": "storybook build"
+// 	},
+// 	"devDependencies": {
+// 		"@chromatic-com/storybook": "3.2.5",
+// 		"@storybook/addon-essentials": "8.6.4",
+// 		"@storybook/addon-onboarding": "8.6.4",
+// 		"@storybook/blocks": "8.6.4",
+// 		"@storybook/experimental-addon-test": "8.6.4",
+// 		"@storybook/test": "8.6.4",
+// 		"@storybook/vue3": "8.6.4",
+// 		"@storybook/vue3-vite": "8.6.4",
+// 		"@vitejs/plugin-vue": "^5.0.4",
+// 		"@vitest/browser": "^1.4.0",
+// 		"@vitest/coverage-v8": "^1.4.0",
+// 		"playwright": "^1.51.0",
+// 		"storybook": "8.6.4",
+// 		"vitest": "^1.4.0"
+// 	},
+// 	"dependencies": {
+// 		"vite": "5.1.4",
+// 		"vue": "3.4.19",
+// 		"@vue/runtime-core": "^3.4.19",
+// 		"@vue/compiler-sfc": "^3.4.19"
+// 	}
+// }
