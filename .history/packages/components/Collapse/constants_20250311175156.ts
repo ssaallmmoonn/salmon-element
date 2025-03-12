@@ -1,0 +1,1 @@
+import type { Inject} from 'vue'

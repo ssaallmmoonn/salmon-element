@@ -1,0 +1,1 @@
+import type { const key: InjectionKey = Symbol();} from 'vue'

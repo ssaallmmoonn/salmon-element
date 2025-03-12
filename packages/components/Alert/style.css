@@ -1,0 +1,100 @@
+.yis-alert {
+	--yis-alert-padding: 8px 16px;
+	--yis-alert-border-radius-base: var(--yis-border-radius-base);
+	--yis-alert-bg-color: var(--yis-color-white);
+	--yis-alert-title-font-size: 14px;
+	--yis-alert-title-font-size-with-desc: 16px;
+	--yis-alert-desc-font-size: 14px;
+	--yis-alert-text-color: var(--yis-text-color-primary);
+	--yis-alert-top-margin: 20px;
+	--yis-alert-icon-size: 16px;
+	--yis-alert-icon-margin: 8px;
+	--yis-alert-big-icon-size: 28px;
+	--yis-alert-big-icon-margin: 12px;
+}
+.yis-alert {
+	padding: var(--yis-alert-padding);
+	margin: 0;
+	box-sizing: border-box;
+	border-radius: var(--yis-alert-border-radius-base);
+	position: relative;
+	background-color: var(--yis-alert-bg-color);
+	overflow: hidden;
+	opacity: 1;
+	display: flex;
+	align-items: center;
+	transition: opacity var(--yis-transition-duration);
+	margin-top: var(--yis-alert-top-margin);
+	.yis-alert__icon {
+		color: var(--yis-alert-text-color);
+		font-size: var(--yis-alert-icon-size);
+		width: var(--yis-alert-icon-size);
+		margin-right: var(--yis-alert-icon-margin);
+		&.big-icon {
+			font-size: var(--yis-alert-big-icon-size);
+			width: var(--yis-alert-big-icon-size);
+			margin-right: var(--yis-alert-big-icon-margin);
+		}
+	}
+	.yis-alert__content {
+		color: var(--yis-alert-text-color);
+		vertical-align: text-top;
+		.yis-alert__title {
+			font-size: var(--yis-alert-title-font-size);
+			line-height: 24px;
+			&.with-desc {
+				font-size: var(--yis-alert-title-font-size-with-desc);
+			}
+		}
+		.yis-alert__description {
+			font-size: var(--yis-alert-desc-font-size);
+			margin: 0;
+		}
+
+		.yis-alert__close {
+			font-size: var(--yis-alert-close-font-size);
+			opacity: 1;
+			position: absolute;
+			top: 12px;
+			right: 15px;
+			cursor: pointer;
+			:deep(.yis-icon) {
+				vertical-align: top;
+			}
+		}
+		&.yis-alert__light {
+			.yis-alert__close {
+				color: var(--yis-text-color-placeholder);
+			}
+		}
+		&.yis-alert__dark {
+			.yis-alert__close {
+				color: var(--yis-color-white);
+			}
+		}
+	}
+
+	&.text-center {
+		justify-content: center;
+		span,
+		p {
+			text-align: center;
+		}
+	}
+}
+
+.yis-alert-fade-enter-from,
+.yis-alert-fade-leave-to {
+	opacity: 0;
+}
+
+@each $val in success, warning, info, danger {
+	.yis-alert__$(val).yis-alert__light {
+		--yis-alert-text-color: var(--yis-color-$(val));
+		--yis-alert-bg-color: var(--yis-color-$(val)-light-9);
+	}
+	.yis-alert__$(val).yis-alert__dark {
+		--yis-alert-text-color: var(--yis-color-white);
+		--yis-alert-bg-color: var(--yis-color-$(val));
+	}
+}
