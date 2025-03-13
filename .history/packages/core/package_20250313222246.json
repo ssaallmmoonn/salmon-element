@@ -47,13 +47,13 @@
 	"devDependencies": {
 		"@rollup/plugin-terser": "^0.4.4",
 		"@salmon-element/components": "workspace:*",
-		"@vue/runtime-core": "^3.5.13",
 		"rollup-plugin-visualizer": "^5.14.0",
 		"shelljs": "^0.9.1",
 		"terser": "^5.39.0",
 		"vite": "5.1.4",
 		"vite-plugin-compression2": "^1.3.3",
-		"vite-plugin-dts": "^3.9.1"
+		"vite-plugin-dts": "^3.9.1",
+		"@vue/runtime-core": "^3.4.19"
 	},
 	"peerDependencies": {
 		"vue": "^3.4.19"

@@ -17,4 +17,4 @@ export default [
 	YisCollapseItem,
 	YisAlert,
 	YisTooltip,
-] as unknown as Plugin[];
+] as Plugin[];

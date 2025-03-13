@@ -38,6 +38,9 @@ importers:
       salmon-element:
         specifier: workspace:*
         version: link:packages/core
+      sass:
+        specifier: ^1.85.1
+        version: 1.85.1
       vitest:
         specifier: ^3.0.8
         version: 3.0.8(@types/node@20.11.20)(@vitest/browser@3.0.8)(jsdom@24.0.0)(msw@2.7.3(@types/node@20.11.20)(typescript@5.2.2))(sass@1.85.1)(terser@5.39.0)
@@ -166,6 +169,9 @@ importers:
       '@salmon-element/components':
         specifier: workspace:*
         version: link:../components
+      '@vue/runtime-core':
+        specifier: ^3.5.13
+        version: 3.5.13
       rollup-plugin-visualizer:
         specifier: ^5.14.0
         version: 5.14.0(rollup@4.35.0)

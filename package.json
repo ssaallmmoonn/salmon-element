@@ -49,15 +49,16 @@
 		"@salmon-element/hooks": "workspace:*",
 		"@salmon-element/theme": "workspace:*",
 		"@salmon-element/utils": "workspace:*",
+		"@vitest/coverage-v8": "3.0.8",
 		"@vue/compiler-sfc": "^3.4.19",
 		"@vue/runtime-core": "^3.4.19",
+		"@vue/test-utils": "2.4.5",
+		"jsdom": "24.0.0",
 		"lodash-es": "4.17.21",
 		"salmon-element": "workspace:*",
-		"vue": "3.4.19",
-		"jsdom": "24.0.0",
-		"@vitest/coverage-v8": "3.0.8",
-		"@vue/test-utils": "2.4.5",
-		"vitest": "^3.0.8"
+		"sass": "^1.85.1",
+		"vitest": "^3.0.8",
+		"vue": "3.4.19"
 	},
 	"publishConfig": {
 		"access": "public"

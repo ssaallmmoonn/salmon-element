@@ -11,7 +11,7 @@ import {
   text
 } from "./chunk-CWSTFTPX.js";
 
-// ../../node_modules/.pnpm/@fortawesome+vue-fontawesom_3c8d52f9f15edcce64a4022defd76788/node_modules/@fortawesome/vue-fontawesome/index.es.js
+// ../../node_modules/.pnpm/@fortawesome+vue-fontawesom_3bb517911485cf7b3fa2fdd82e1ec8cd/node_modules/@fortawesome/vue-fontawesome/index.es.js
 function ownKeys(e, r) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {

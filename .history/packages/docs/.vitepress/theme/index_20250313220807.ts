@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import { ElementPlusContainer } from '../../../../_node_modules/vitepress-preview-component/index';
+import { ElementPlusContainer } from '../../../../_node_modules/vitepress-preview-component';
 import DefaultTheme from 'vitepress/theme';
 import SalmonElement from 'salmon-element';
 

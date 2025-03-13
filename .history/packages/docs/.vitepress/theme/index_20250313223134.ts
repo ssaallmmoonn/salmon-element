@@ -10,6 +10,6 @@ export default {
 	...DefaultTheme,
 	enhanceApp({ app }: { app: App }) {
 		app.component('demo-preview', ElementPlusContainer);
-		app.use(SalmonElement as any);
+		app.use(SalmonElement );
 	},
 };

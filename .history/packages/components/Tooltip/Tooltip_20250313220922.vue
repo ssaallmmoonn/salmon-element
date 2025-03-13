@@ -30,7 +30,7 @@ const events: Ref<Record<string, EventListener>> = ref({});
 const outerEvents: Ref<Record<string, EventListener>> = ref({});
 const dropdownEvents: Ref<Record<string, EventListener>> = ref({});
 
-const containerNode = ref<HTMLElement>();
+const containerNode = ref<void | HTMLElement | unde>();
 const popperNode = ref<HTMLElement>();
 const _triggerNode = ref<HTMLElement>();
 
