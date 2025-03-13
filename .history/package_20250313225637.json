@@ -8,7 +8,7 @@
 		"story": "pnpm run build && pnpm --filter @salmon-element/play run storybook",
 		"docs:dev": "pnpm --filter @salmon-element/docs run dev ",
 		"docs:build": "pnpm --filter @salmon-element/docs run build",
-		"test": "run-p test-utils test-comp",
+		"test": "run-s test-utils test-comp",
 		"test-comp": "cross-env NODE_ENV=test pnpm --filter @salmon-element/components run test",
 		"test-utils": "cross-env NODE_ENV=test pnpm --filter @salmon-element/utils run test",
 		"build": "cross-env NODE_ENV=production pnpm --filter salmon-element run build",
