@@ -1,0 +1,27 @@
+{
+  "name": "locale",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "module": "index.<template>
+    <div class="-container"></div>
+  </template>
+  
+  <script lang="ts">
+    export default defineComponent({
+      name: '',
+      setup() {
+        return {}
+      },
+    })
+  </script>
+  
+  <style lang="scss" scoped></style>",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.1"
+}

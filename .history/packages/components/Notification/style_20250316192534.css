@@ -1,0 +1,94 @@
+.yis-notification {
+	--yis-notification-width: 330px;
+	--yis-notification-padding: 14px 26px 14px 13px;
+	--yis-notification-radius: 8px;
+	--yis-notification-shadow: var(--yis-box-shadow-light);
+	--yis-notification-border-color: var(--yis-border-color-lighter);
+	--yis-notification-icon-size: 24px;
+	--yis-notification-close-font-size: var(--yis-message-close-size, 16px);
+	--yis-notification-content-font-size: var(--yis-font-size-base);
+	--yis-notification-content-color: var(--yis-text-color-regular);
+	--yis-notification-title-font-size: 16px;
+	--yis-notification-title-color: var(--yis-text-color-primary);
+	--yis-notification-close-color: var(--yis-text-color-secondary);
+	--yis-notification-close-hover-color: var(--yis-text-color-regular);
+}
+.yis-notification {
+	display: flex;
+	width: var(--yis-notification-width);
+	padding: var(--yis-notification-padding);
+	border-radius: var(--yis-notification-radius);
+	box-sizing: border-box;
+	border: 1px solid var(--yis-notification-border-color);
+	position: fixed;
+	background-color: var(--yis-bg-color-overlay);
+	box-shadow: var(--yis-notification-shadow);
+	transition: opacity var(--yis-transition-duration), transform var(--yis-transition-duration),
+		right var(--yis-transition-duration), top 0.4s, bottom var(--yis-transition-duration);
+	overflow-wrap: anywhere;
+	overflow: hidden;
+	z-index: 9999;
+	&.right {
+		right: 10px;
+	}
+	&.left {
+		left: 10px;
+	}
+
+	.yis-notification__text {
+		margin: 0 10px;
+	}
+	.yis-notification__icon {
+		height: var(--yis-notification-icon-size);
+		width: var(--yis-notification-icon-size);
+		font-size: var(--yis-notification-icon-size);
+		color: var(--yis-notification-icon-color);
+	}
+
+	.yis-notification__title {
+		font-weight: 700;
+		font-size: var(--yis-notification-title-font-size);
+		line-height: var(--yis-notification-icon-size);
+		color: var(--yis-notification-title-color);
+		margin: 0;
+	}
+	.yis-notification__content {
+		font-size: var(--yis-notification-content-font-size);
+		line-height: 24px;
+		margin: 6px 0 0;
+		color: var(--yis-notification-content-color);
+		text-align: justify;
+	}
+	.yis-notification__close {
+		position: absolute;
+		top: 18px;
+		right: 15px;
+		cursor: pointer;
+		color: var(--yis-notification-close-color);
+		font-size: var(--yis-notification-close-font-size);
+	}
+}
+@each $val in info, success, warning, danger {
+	.yis-notification--$(val) {
+		--yis-notification-icon-color: var(--yis-color-$(val));
+		color: var(--el-notification-icon-color);
+	}
+}
+.yis-notification--error {
+	--yis-notification-icon-color: var(--yis-color-danger);
+	color: var(--el-notification-icon-color);
+}
+
+.yis-notification-fade-enter-from {
+	&.right {
+		right: 0;
+		transform: translate(100%);
+	}
+	&.left {
+		left: 0;
+		transform: translate(-100%);
+	}
+}
+.yis-notification-fade-leave-to {
+	opacity: 0;
+}

@@ -1,0 +1,79 @@
+.yis-message {
+  --yis-message-bg-color: var(--yis-color-info-light-9);
+  --yis-message-bordyis-color: var(--yis-bordyis-color-lighter);
+  --yis-message-padding: 15px 19px;
+  --yis-message-close-size: 16px;
+  --yis-message-close-icon-color: var(--yis-text-color-placeholder);
+  --yis-message-close-hovyis-color: var(--yis-text-color-secondary);
+  --yis-message-icon-size: 16px;
+  --yis-message-icon-margin: 8px;
+}
+
+.yis-message {
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  box-sizing: bordyis-box;
+  bordyis-radius: var(--yis-bordyis-radius-base);
+  bordyis-width: var(--yis-bordyis-width);
+  bordyis-style: var(--yis-bordyis-style);
+  bordyis-color: var(--yis-message-bordyis-color);
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  background-color: var(--yis-message-bg-color);
+  padding: var(--yis-message-padding);
+  display: flex;
+  align-items: center;
+  transition: top var(--yis-transition-duration), opacity var(--yis-transition-duration),
+    transform var(--yis-transition-duration);
+  .yis-message__icon {
+    color: var(--yis-message-text-color);
+    font-size: var(--yis-message-icon-size);
+    width: var(--yis-message-icon-size);
+    margin-right: var(--yis-message-icon-margin);
+  }
+  .yis-message__content {
+    color: var(--yis-message-text-color);
+    overflow-wrap: break-word;
+  }
+  &.is-close .yis-message__content {
+    padding-right: 10px;
+  }
+  &.text-center {
+    justify-content: center;
+  }
+  .yis-message__close {
+    display: flex;
+    align-items: center;
+  }
+  .yis-message__close .yis-icon {
+    cursor: pointer;
+  }
+}
+
+@each $val in info, success, warning, danger {
+  .yis-message--$(val) {
+    --yis-message-bg-color: var(--yis-color-$(val)-light-9);
+    --yis-message-bordyis-color: var(--yis-color-$(val)-light-8);
+    --yis-message-text-color: var(--yis-color-$(val));
+    .yis-message__close {
+      --yis-icon-color: var(--yis-color-$(val));
+    }
+  }
+}
+
+.yis-message--error {
+  --yis-message-bg-color: var(--yis-color-dangyis-light-9);
+  --yis-message-bordyis-color: var(--yis-color-dangyis-light-8);
+  --yis-message-text-color: var(--yis-color-danger);
+  .yis-message__close {
+    --yis-icon-color: var(--yis-color-danger);
+  }
+}
+
+.yis-message.fade-up-entyis-from,
+.yis-message.fade-up-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -100%);
+}
