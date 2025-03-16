@@ -33,11 +33,24 @@ describe('install', () => {
 		const wrapper = mount(() => <div id="app"></div>);
 		const app = createApp(AppComp);
 
-		app.use(compA).mount(wrapper.element);
+		app.use(compA).use(compB);
+		app.mount(wrapper.element);
 
 		expect(compA.install).toBeDefined();
 		expect(compB.install).toBeDefined();
-		expect(app._context.components['CompA']).toBeTruthy();
-		expect(app._context.components['CompB']).toBeFalsy();
+		expect(wrapper.findComponent(compA)).toBeTruthy();
+		expect(wrapper.findComponent(compB)).toBeTruthy();
+	});
+
+	it('makeInstaller should be worked', () => {
+		const wrapper = mount(() => <div id="app"></div>);
+		const app = createApp(AppComp);
+		const installer = makeInstaller([compA, compB]);
+
+		app.use(installer).mount(wrapper.element);
+
+		expect(installer).toBeDefined();
+		expect(wrapper.findComponent(compA)).toBeTruthy();
+		expect(wrapper.findComponent(compB)).toBeTruthy();
 	});
 });

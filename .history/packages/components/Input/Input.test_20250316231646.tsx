@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { mount } from '@vue/test-utils';
 import Input from './Input.vue';
-import YisIcon from '../Icon/Icon.vue';
+import 
 
 describe('Input.vue', () => {
 	test('render', () => {
@@ -87,7 +87,7 @@ describe('Input.vue', () => {
 				type: 'text',
 			},
 			global: {
-				stubs: ['YisIcon'],
+				stubs: ['Icon'],
 			},
 		});
 
@@ -127,7 +127,7 @@ describe('Input.vue', () => {
 				showPassword: true,
 			},
 			global: {
-				stubs: ['YisIcon'],
+				stubs: ['Icon'],
 			},
 		});
 

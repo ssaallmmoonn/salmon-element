@@ -87,7 +87,7 @@ describe('Input.vue', () => {
 				type: 'text',
 			},
 			global: {
-				stubs: ['YisIcon'],
+				stubs: ['Icon'],
 			},
 		});
 
@@ -127,7 +127,7 @@ describe('Input.vue', () => {
 				showPassword: true,
 			},
 			global: {
-				stubs: ['YisIcon'],
+				stubs: ['Icon'],
 			},
 		});
 

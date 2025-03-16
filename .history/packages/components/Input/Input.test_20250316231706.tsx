@@ -127,7 +127,7 @@ describe('Input.vue', () => {
 				showPassword: true,
 			},
 			global: {
-				stubs: ['YisIcon'],
+				stubs: ['Icon'],
 			},
 		});
 
