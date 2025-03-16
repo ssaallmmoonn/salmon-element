@@ -1,0 +1,17 @@
+{
+	"name": "@salmon-element/components",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "cross-env NODE_ENV=test pnpm --filter vitest --run --coverage",
+		"test:watch": "vitest --coverage"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.6.1",
+	"dependencies": {
+		"@salmon-element/hooks": "workspace:^"
+	}
+}

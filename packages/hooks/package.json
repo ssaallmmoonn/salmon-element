@@ -2,6 +2,8 @@
 	"name": "@salmon-element/hooks",
 	"version": "1.0.0",
 	"type": "module",
+	"main": "index.ts",
+	"private": "true",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"files": [
@@ -19,7 +21,12 @@
 	},
 	"license": "ISC",
 	"peerDependencies": {
-		"vue": "^3.4.27",
-		"lodash-es": "^4.17.21"
+		"lodash-es": "^4.17.21",
+		"vue": "^3.4.27"
+	},
+	"dependencies": {
+		"@salmon-element/vite-plugins": "workspace:^",
+		"vite": "^5.1.4",
+		"vite-plugin-dts": "^4.5.3"
 	}
 }
