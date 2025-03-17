@@ -1,17 +1,17 @@
 import {
-  computed,
-  defineComponent,
-  h,
-  watch
-} from "./chunk-QQPDCYC4.js";
-import {
   config$1,
   icon,
   parse$1,
   text
 } from "./chunk-CWSTFTPX.js";
+import {
+  computed,
+  defineComponent,
+  h,
+  watch
+} from "./chunk-JHAG5HRV.js";
 
-// ../../node_modules/.pnpm/@fortawesome+vue-fontawesom_3bb517911485cf7b3fa2fdd82e1ec8cd/node_modules/@fortawesome/vue-fontawesome/index.es.js
+// ../../node_modules/.pnpm/@fortawesome+vue-fontawesom_0dffa63c46a30535dc47b65774fece1f/node_modules/@fortawesome/vue-fontawesome/index.es.js
 function ownKeys(e, r) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
