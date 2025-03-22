@@ -13,6 +13,7 @@ export interface ElementLoading extends HTMLElement {
 function createInstance(el: ElementLoading, binding: DirectiveBinding<boolean>) {
 	const getProp = <K extends keyof LoadingOptions>(name: K) =>
 		el.getAttribute(`yis-loading-${name}`) as MaybeRef<string>;
+
 	const getModifier = <K extends keyof LoadingOptions>(name: K) => binding.modifiers[name];
 
 	const fullscreen = getModifier('fullscreen');
@@ -37,14 +38,12 @@ export const vLoading: Directive<ElementLoading, boolean> = {
 		if (binding.value) createInstance(el, binding);
 	},
 	updated(el, binding) {
-		// 值未发生变化
 		if (binding.oldValue === binding.value) return;
-		// 值从false改为true
+
 		if (binding.value && !binding.oldValue) {
 			createInstance(el, binding);
 			return;
 		}
-		// 值从true改为false（相当于else了）
 		el[INSTANCE_KEY]?.instance.close();
 	},
 	unmounted(el) {

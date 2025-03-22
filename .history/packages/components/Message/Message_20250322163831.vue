@@ -4,7 +4,8 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { getLastBottomOffset } from './methods';
 import { delay, bind } from 'lodash-es';
 import { useOffset, useEventListener } from '@salmon-element/hooks';
-import { addUnit, typeIconMap, RenderVnode } from '@salmon-element/utils';
+import {  } from '@salmon-element/utils';
+import { addUnit,typeIconMap, RenderVnode } from '@salmon-element/utils';
 import YisIcon from '../Icon/Icon.vue';
 
 defineOptions({ name: 'YisMessage' });

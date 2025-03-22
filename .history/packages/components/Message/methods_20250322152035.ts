@@ -60,7 +60,7 @@ const createMessage = (props: CreateMessageProps): MessageInstance => {
 
 	const vm = vnode.component!; // 组件的实例
 	const handler: MessageHandler = {
-		close: () => vm.exposed!.close(), // 调用message组件实例中对外暴露的close方法
+		close: () => vm.exposed!.close(), // s
 	};
 	const instance: MessageInstance = {
 		props: _props,
@@ -98,14 +98,14 @@ export function closeAll(type?: MessageType) {
 		instance.handler.close();
 	});
 }
-message.closeAll = closeAll;
 
-// 用户可以通过massage.success等方式快速创建特定类型的消息
 each(messageTypes, type => {
 	set(message, type, (opts: MessageParams) => {
 		const normalized = normalizedOptions(opts);
 		return message({ ...normalized, type });
 	});
 });
+
+message.closeAll = closeAll;
 
 export default message as Message;

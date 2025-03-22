@@ -3,7 +3,7 @@ import type { MessageProps, MessageCompInstance } from './types';
 import { computed, onMounted, ref, watch } from 'vue';
 import { getLastBottomOffset } from './methods';
 import { delay, bind } from 'lodash-es';
-import { useOffset, useEventListener } from '@salmon-element/hooks';
+import { useOffset, 	 } from '@salmon-element/hooks';
 import { addUnit, typeIconMap, RenderVnode } from '@salmon-element/utils';
 import YisIcon from '../Icon/Icon.vue';
 

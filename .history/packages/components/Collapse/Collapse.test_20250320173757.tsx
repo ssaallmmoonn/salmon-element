@@ -186,7 +186,7 @@ describe('Collapse/transitionEvents.ts', () => {
 	});
 	test('afterEnter', () => {
 		transitionEvents.afterEnter(wrapper.element as HTMLElement);
-		expect((wrapper.element as HTMLElement).style.height).toBe('');
+		expect((wrapper.element as HTMLElement).height).toBe('');
 		expect((wrapper.element as HTMLElement).style.overflow).toBe('');
 	});
 	test('beforeLeave', () => {

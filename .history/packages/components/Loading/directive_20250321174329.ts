@@ -44,7 +44,7 @@ export const vLoading: Directive<ElementLoading, boolean> = {
 			createInstance(el, binding);
 			return;
 		}
-		// 值从true改为false（相当于else了）
+		// 值从true改为false
 		el[INSTANCE_KEY]?.instance.close();
 	},
 	unmounted(el) {

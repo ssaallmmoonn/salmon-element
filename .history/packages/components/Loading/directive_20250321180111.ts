@@ -15,7 +15,6 @@ function createInstance(el: ElementLoading, binding: DirectiveBinding<boolean>) 
 		el.getAttribute(`yis-loading-${name}`) as MaybeRef<string>;
 	const getModifier = <K extends keyof LoadingOptions>(name: K) => binding.modifiers[name];
 
-	const fullscreen = getModifier('fullscreen');
 	const options: LoadingOptions = {
 		text: getProp('text'),
 		spinner: getProp('spinner'),

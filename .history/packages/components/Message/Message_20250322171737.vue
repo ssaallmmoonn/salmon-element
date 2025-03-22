@@ -69,6 +69,7 @@ defineExpose<MessageCompInstance>({
 </script>
 
 <template>
+	<!--  -->
 	<Transition
 		:name="transitionName"
 		@enter="boxHeight = messageRef!.getBoundingClientRect().height"

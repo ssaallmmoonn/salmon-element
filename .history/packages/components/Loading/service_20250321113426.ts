@@ -73,7 +73,6 @@ function createLoading(opts: LoadingOptionsResolved) {
 // 解析用户传递的配置，并生成标准化的LoadingOptionsResolved对象
 function resolveOptions(opts: LoadingOptions): LoadingOptionsResolved {
 	let target: HTMLElement;
-	// 判断opts.target是选择器还是DOM元素
 	if (isString(opts.target)) {
 		target = document.querySelector(opts.target) ?? document.body;
 	} else {
@@ -91,6 +90,7 @@ function resolveOptions(opts: LoadingOptions): LoadingOptionsResolved {
 	};
 }
 
+// 动态添加或移除目标元素的样式类，用于控制加载器的定位和内容显示
 function addRelativeClass(target: HTMLElement = document.body) {
 	target.classList.add(RELATIVE_CLASS);
 }

@@ -156,7 +156,7 @@ export function Loading(options: LoadingOptions = {}): LoadingInstance {
 
 	addLoadingNumb(resolved?.parent);
 	if (instanceMap.has(target)) {
-		return instanceMap.get(target)!;
+		return instanceMap.get(target);
 	}
 
 	const instance = createLoading({

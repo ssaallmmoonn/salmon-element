@@ -36,7 +36,7 @@ describe('Collapse.vue', () => {
 				global: {
 					stubs: ['YisIcon'],
 				},
-				attachTo: document.body, // 最新版本 jsdom 更新缓存 bug
+				// attachTo: document.body, // 最新版本 jsdom 更新缓存 bug
 			}
 		);
 

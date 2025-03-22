@@ -70,10 +70,9 @@ function createLoading(opts: LoadingOptionsResolved) {
 	};
 }
 
-// 解析用户传递的配置，并生成标准化的LoadingOptionsResolved对象
+// 解析用户传递的配置，并生成标准化的LoadingOptionsResolved
 function resolveOptions(opts: LoadingOptions): LoadingOptionsResolved {
 	let target: HTMLElement;
-	// 判断opts.target是选择器还是DOM元素
 	if (isString(opts.target)) {
 		target = document.querySelector(opts.target) ?? document.body;
 	} else {

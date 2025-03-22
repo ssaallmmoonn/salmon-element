@@ -99,7 +99,6 @@ export function closeAll(type?: MessageType) {
 	});
 }
 message.closeAll = closeAll;
-
 // 用户可以通过massage.success等方式快速创建特定类型的消息
 each(messageTypes, type => {
 	set(message, type, (opts: MessageParams) => {

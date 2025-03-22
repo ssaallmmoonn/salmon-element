@@ -186,21 +186,21 @@ describe('Collapse/transitionEvents.ts', () => {
 	});
 	test('afterEnter', () => {
 		transitionEvents.afterEnter(wrapper.element as HTMLElement);
-		expect((wrapper.element as HTMLElement).style.height).toBe('');
+		expect((wrapper.element as HTMLElement).height).toBe('');
 		expect((wrapper.element as HTMLElement).style.overflow).toBe('');
 	});
 	test('beforeLeave', () => {
-		transitionEvents.beforeLeave(wrapper.element as HTMLElement);
-		expect((wrapper.element as HTMLElement).style.height).toBe(`${wrapper.element.scrollHeight}px`);
-		expect((wrapper.element as HTMLElement).style.overflow).toBe('hidden');
+		transitionEvents.beforeLeave(wrapper.element);
+		expect(wrapper.element.style.height).toBe(`${wrapper.element.scrollHeight}px`);
+		expect(wrapper.element.style.overflow).toBe('hidden');
 	});
 	test('leave', () => {
-		transitionEvents.leave(wrapper.element as HTMLElement);
-		expect((wrapper.element as HTMLElement).style.height).toBe('0px');
+		transitionEvents.leave(wrapper.element);
+		expect(wrapper.element.style.height).toBe('0px');
 	});
 	test('afterLeave', () => {
-		transitionEvents.afterLeave(wrapper.element as HTMLElement);
-		expect((wrapper.element as HTMLElement).style.height).toBe('');
-		expect((wrapper.element as HTMLElement).style.overflow).toBe('');
+		transitionEvents.afterLeave(wrapper.element);
+		expect(wrapper.element.style.height).toBe('');
+		expect(wrapper.element.style.overflow).toBe('');
 	});
 });
