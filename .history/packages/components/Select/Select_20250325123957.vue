@@ -1,72 +1,61 @@
 <script setup lang="ts">
-import {
-	assign,
-	find,
-	get,
-	each,
-	noop,
-	isFunction,
-	filter,
-	isNil,
-	isBoolean,
-	includes,
-	map,
-	size,
-	eq,
-	debounce,
-} from 'lodash-es';
-import {
-	ref,
-	reactive,
-	computed,
-	onMounted,
-	provide,
-	useSlots,
-	watch,
-	h,
-	nextTick,
-	type Ref,
-	type VNode,
-} from 'vue';
 import type {
 	SelectProps,
 	SelectEmits,
-	SelectOptionProps,
 	SelectContext,
 	SelectInstance,
 	SelectStates,
+	SelectOptionProps,
 } from './types';
+import { h, computed, ref, reactive, provide, watch, nextTick, type VNode, onMounted } from 'vue';
 import type { TooltipInstance } from '../Tooltip/types';
 import type { InputInstance } from '../Input/types';
-import { RenderVnode, debugWarn } from '@salmon-element/utils';
-import { useFocusController, useClickOutside } from '@salmon-element/hooks';
-import { SELECT_CTX_KEY, POPPER_OPTIONS } from './constants';
-import { useFormItem, useFormDisabled, useFormItemInputId } from '../Form';
+import { useFormItem, useFormDisabled, use } from '../Form'
+import { debugWarn, RenderVnode } from '@salmon-element/utils';
+import { useId, useFocusController, useClickOutside } from '@salmon-element/hooks';
+import { POPPER_OPTIONS, SELECT_CTX_KEY } from './constants';
+import {
+	each,
+	eq,
+	filter,
+	find,
+	get,
+	size,
+	noop,
+	isFunction,
+	map,
+	assign,
+	isNil,
+	isBoolean,
+	includes,
+	debounce,
+} from 'lodash-es';
 
 import useKeyMap from './useKeyMap';
-import YisTooltip from '../Tooltip/Tooltip.vue';
-import YisIcon from '../Icon/Icon.vue';
-import YisInput from '../Input/Input.vue';
 import YisOption from './Option.vue';
+import YisTooltip from '../Tooltip/Tooltip.vue';
+import YisInput from '../Input/Input.vue';
+import YisIcon from '../Icon/Icon.vue';
 
-const COMPONENT_NAME = 'YisSelect' as const;
-defineOptions({
-	name: COMPONENT_NAME,
-});
+const COMPONENT_NAME = 'YisSelect';
+
+defineOptions({ name: COMPONENT_NAME });
+
 const props = withDefaults(defineProps<SelectProps>(), {
 	options: () => [],
 });
 const emits = defineEmits<SelectEmits>();
-
-const initialOption = findOption(props.modelValue);
+const slots = defineSlots();
 
 const selectRef = ref<HTMLElement>();
 const tooltipRef = ref<TooltipInstance>();
 const inputRef = ref<InputInstance>();
+const filteredChilds = ref<Map<VNode, SelectOptionProps>>(new Map());
+const filteredOptions = ref(props.options ?? []);
 
 const isDropdownVisible = ref(false);
-const filteredOptions = ref(props.options ?? []);
-const filteredChilds: Ref<Map<VNode, SelectOptionProps>> = ref(new Map());
+
+const initialOption = findOption(props.modelValue);
 
 const selectStates = reactive<SelectStates>({
 	inputValue: initialOption?.label ?? '',
@@ -76,18 +65,12 @@ const selectStates = reactive<SelectStates>({
 	highlightedIndex: -1,
 });
 
-const slots = useSlots();
-const isDisabled = useFormDisabled();
-const { formItem } = useFormItem();
-const { inputId } = useFormItemInputId(props, formItem);
-const {
-	wrapperRef: inputWrapperRef,
-	isFocused,
-	handleBlur,
-	handleFocus,
-} = useFocusController(inputRef);
-
-useClickOutside(selectRef, e => handleClickOutsie(e));
+const isDisabled = computed(() => props.disabled);
+const children = computed(() => filter(slots?.default?.(), child => eq(child.type, YisOption)));
+const hasChildren = computed(() => size(children.value) > 0);
+const showClear = computed(
+	() => props.clearable && selectStates.mouseHover && selectStates.inputValue !== ''
+);
 
 const highlightedLine = computed(() => {
 	let result: SelectOptionProps | void;
@@ -97,14 +80,13 @@ const highlightedLine = computed(() => {
 	} else {
 		result = filteredOptions.value[selectStates.highlightedIndex];
 	}
+
 	return result;
 });
 
-const children = computed(() => filter(slots?.default?.(), child => eq(child.type, YisOption)));
-
-const hasChildren = computed(() => size(children.value) > 0);
-const childrenOptsions = computed(() => {
+const childrenOptions = computed(() => {
 	if (!hasChildren.value) return [];
+
 	return map(children.value, item => ({
 		vNode: h(item),
 		props: assign(item.props, {
@@ -115,13 +97,12 @@ const childrenOptsions = computed(() => {
 	}));
 });
 
-const filterPlaceholder = computed(() => {
-	return props.filterable && selectStates.selectedOption && isDropdownVisible.value
-		? selectStates.selectedOption.label
-		: props.placeholder;
-});
+const isNoData = computed(() => {
+	if (!props.filterable) return false;
+	if (!hasData.value) return true;
 
-const timeout = computed(() => (props.remote ? 300 : 0));
+	return false;
+});
 
 const hasData = computed(
 	() =>
@@ -129,21 +110,26 @@ const hasData = computed(
 		(!hasChildren.value && size(filteredOptions.value) > 0)
 );
 
-const isNoData = computed(() => {
-	if (!props.filterable) return false;
-	if (!hasData.value) return true;
-	return false;
-});
-
 const lastIndex = computed(() =>
 	hasChildren.value ? filteredChilds.value.size - 1 : size(filteredOptions.value) - 1
 );
 
-const showClear = computed(
-	() => props.clearable && selectStates.mouseHover && selectStates.inputValue !== ''
+const filterPlaceholder = computed(() =>
+	props.filterable && selectStates.selectedOption && isDropdownVisible.value
+		? selectStates.selectedOption.label
+		: props.placeholder
 );
+const timeout = computed(() => (props.remote ? 300 : 100));
 
 const handleFilterDebounce = debounce(handleFilter, timeout.value);
+
+const inputId = useId().value;
+const {
+	wrapperRef: inputWrapperRef,
+	isFocused,
+	handleBlur,
+	handleFocus,
+} = useFocusController(inputRef);
 
 const keyMap = useKeyMap({
 	isDropdownVisible,
@@ -155,26 +141,20 @@ const keyMap = useKeyMap({
 	lastIndex,
 });
 
+useClickOutside(selectRef, e => handleClickOutside(e));
+
 const focus: SelectInstance['focus'] = function () {
 	inputRef.value?.focus();
 };
 
 const blur: SelectInstance['blur'] = function () {
-	handleClickOutsie();
+	handleClickOutside();
 };
 
-function setFilteredChilds(opts: typeof childrenOptsions.value) {
-	filteredChilds.value.clear();
-	each(opts, item => {
-		filteredChilds.value.set(item.vNode, item.props as SelectOptionProps);
-	});
-}
-
-function renderLabel(opt: SelectOptionProps): VNode | string {
-	if (isFunction(props.renderLabel)) {
-		return props.renderLabel(opt);
+function handleClickOutside(e?: Event) {
+	if (isFocused.value) {
+		nextTick(() => handleBlur(new FocusEvent('focus', e)));
 	}
-	return opt.label;
 }
 
 function controlVisible(visible: boolean) {
@@ -186,45 +166,21 @@ function controlVisible(visible: boolean) {
 
 	selectStates.highlightedIndex = -1;
 }
+
 function controlInputVal(visible: boolean) {
 	if (!props.filterable) return;
 	if (visible) {
 		if (selectStates.selectedOption) selectStates.inputValue = '';
 		handleFilterDebounce();
-	} else {
-		selectStates.inputValue = selectStates.selectedOption?.label || '';
+		return;
 	}
+	selectStates.inputValue = selectStates.selectedOption?.label || '';
 }
+
 function toggleVisible() {
 	if (isDisabled.value) return;
+	console.log('toggleVisible');
 	controlVisible(!isDropdownVisible.value);
-}
-
-function findOption(value: string) {
-	return find(props.options, option => option.value === value);
-}
-
-function handleClickOutsie(e?: Event) {
-	if (isFocused.value) {
-		nextTick(() => handleBlur(new FocusEvent('focus', e)));
-	}
-}
-
-function handleSelect(o: SelectOptionProps) {
-	if (o.disabled) return;
-
-	selectStates.inputValue = o.label;
-	selectStates.selectedOption = o;
-	each(['change', 'update:modelValue'], k => emits(k as any, o.value));
-	controlVisible(false);
-	inputRef.value?.focus();
-}
-
-function setSelected() {
-	const option = findOption(props.modelValue);
-	if (!option) return;
-	selectStates.inputValue = option.label;
-	selectStates.selectedOption = option;
 }
 
 function handleClear() {
@@ -234,25 +190,64 @@ function handleClear() {
 
 	emits('clear');
 	each(['change', 'update:modelValue'], k => emits(k as any, ''));
-	formItem?.clearValidate();
 }
 
-async function callRemoteMethod(method: Function, search: string) {
-	if (!method || !isFunction(method)) return;
+function findOption(value: string) {
+	return find(props.options, opt => opt.value === value);
+}
 
-	selectStates.loading = true;
-	let result;
-	try {
-		result = await method(search);
-	} catch (error) {
-		debugWarn(error as Error);
-		debugWarn(COMPONENT_NAME, 'callRemoteMethod error');
-		result = [];
-		return Promise.reject(error);
-	} finally {
-		selectStates.loading = false;
+function handleSelect(opt: SelectOptionProps) {
+	if (opt.disabled) return;
+
+	selectStates.inputValue = opt.label;
+	selectStates.selectedOption = opt;
+	each(['change', 'update:modelValue'], k => emits(k as any, opt.value));
+	controlVisible(false);
+	inputRef.value?.focus();
+}
+
+function setFilteredChilds(opts: typeof childrenOptions.value) {
+	filteredChilds.value.clear();
+	each(opts, item => {
+		filteredChilds.value.set(item.vNode, item.props as SelectOptionProps);
+	});
+}
+
+function handleFilter() {
+	const searcKey = selectStates.inputValue;
+	selectStates.highlightedIndex = -1;
+
+	if (hasChildren.value) {
+		genFilterChilds(searcKey);
+		return;
 	}
-	return result;
+	genFilterOptions(searcKey);
+}
+
+function handleKeyDown(e: KeyboardEvent) {
+	keyMap.has(e.key) && keyMap.get(e.key)?.(e);
+}
+
+async function genFilterChilds(search: string) {
+	if (!props.filterable) return;
+
+	if (props.remote && props.remoteMethod && isFunction(props.remoteMethod)) {
+		await callRemoteMethod(props.remoteMethod, search);
+		setFilteredChilds(childrenOptions.value);
+		return;
+	}
+
+	if (props.filterMethod && isFunction(props.filterMethod)) {
+		const opts = map(props.filterMethod(search), 'value');
+		setFilteredChilds(
+			filter(childrenOptions.value, item => includes(opts, get(item, ['props', 'value'])))
+		);
+		return;
+	}
+
+	setFilteredChilds(
+		filter(childrenOptions.value, item => includes(get(item, ['props', 'label']), search))
+	);
 }
 
 async function genFilterOptions(search: string) {
@@ -267,64 +262,61 @@ async function genFilterOptions(search: string) {
 		filteredOptions.value = props.filterMethod(search);
 		return;
 	}
-
 	filteredOptions.value = filter(props.options, opt => includes(opt.label, search));
 }
 
-async function genFilterChilds(search: string) {
-	if (!props.filterable) return;
+async function callRemoteMethod(method: Function, search: string) {
+	if (!method || !isFunction(method)) return;
 
-	if (props.remote && props.remoteMethod && isFunction(props.remoteMethod)) {
-		await callRemoteMethod(props.remoteMethod, search);
-		setFilteredChilds(childrenOptsions.value);
-		return;
+	selectStates.loading = true;
+	let result;
+	try {
+		result = await method(search);
+	} catch (error) {
+		debugWarn(error as Error);
+		debugWarn(COMPONENT_NAME, 'callRemoteMethod error');
+		result = [];
+		return Promise.reject(error);
 	}
-	if (props.filterMethod && isFunction(props.filterMethod)) {
-		const options = map(props.filterMethod(search), 'value');
-		setFilteredChilds(
-			filter(childrenOptsions.value, item => includes(options, get(item, ['props', 'value'])))
-		);
-		return;
-	}
-	setFilteredChilds(
-		filter(childrenOptsions.value, item => includes(get(item, ['props', 'label']), search))
-	);
+
+	return result;
 }
 
-function handleFilter() {
-	const searchKey = selectStates.inputValue;
-	selectStates.highlightedIndex = -1;
-
-	if (hasChildren.value) {
-		genFilterChilds(searchKey);
-		return;
+function renderLabel(opt: SelectOptionProps): VNode | string {
+	if (isFunction(props.renderLabel)) {
+		return props.renderLabel(opt);
 	}
-	genFilterOptions(searchKey);
+	return opt.label;
 }
 
-function handleKeyDown(e: KeyboardEvent) {
-	keyMap.has(e.key) && keyMap.get(e.key)?.(e);
+function setSelected() {
+	const opt = findOption(props.modelValue);
+	if (!opt) return;
+	selectStates.inputValue = opt.label;
+	selectStates.selectedOption = opt;
 }
 
 watch(
 	() => props.options,
-	newOpts => {
-		filteredOptions.value = newOpts ?? [];
+	newVal => {
+		filteredOptions.value = newVal ?? [];
 	}
 );
 
 watch(
-	() => childrenOptsions.value,
-	newOpts => setFilteredChilds(newOpts),
+	() => childrenOptions.value,
+	newVal => setFilteredChilds(newVal),
 	{ immediate: true }
 );
 
 watch(
 	() => props.modelValue,
 	(newVal, oldVal) => {
+		// 表单校验 逻辑 change
 		if (newVal !== oldVal) {
-			formItem?.validate('change').catch(err => debugWarn(err));
+			formItem?.validate('change');
 		}
+
 		setSelected();
 	}
 );
@@ -401,7 +393,7 @@ defineExpose<SelectInstance>({
 					<yis-icon icon="spinner" spin />
 				</div>
 				<div class="yis-select__nodata" v-else-if="filterable && isNoData">No data</div>
-				<ul class="yis-select__menu" v-else>
+				<ul class="yis-select__menu">
 					<template v-if="!hasChildren">
 						<yis-option v-for="item in filteredOptions" :key="item.value" v-bind="item" />
 					</template>

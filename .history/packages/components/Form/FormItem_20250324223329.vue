@@ -48,6 +48,7 @@ const props = withDefaults(defineProps<FormItemProps>(), {
 });
 const slots = defineSlots();
 const ctx = inject(FORM_CTX_KEY);
+
 const labelId = useId().value;
 const inputIds = ref<string[]>([]);
 const validateStatus: Ref<ValidateStatus> = ref('init');

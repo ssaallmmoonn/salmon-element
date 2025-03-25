@@ -27,7 +27,6 @@ export function useFocusController<T extends HTMLElement | { focus(): void }>(
 	const handleBlur = (event: FocusEvent) => {
 		// 判断是否需要取消失焦
 		const cancelBlur = isFunction(beforeBlur) ? beforeBlur(event) : false;
-		// 检查相关目标是否在包装器内
 		if (
 			cancelBlur ||
 			(event.relatedTarget && wrapperRef.value?.contains(event.relatedTarget as Node))

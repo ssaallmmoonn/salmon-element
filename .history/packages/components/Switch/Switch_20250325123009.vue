@@ -1,34 +1,37 @@
 <script setup lang="ts">
+import type { SwitchProps, SwitchEmits, SwitchInstance } from './types';
 import { ref, computed, onMounted, watch } from 'vue';
-import type { SwitchEmits, SwitchProps, SwitchInstance } from './types';
-import { debugWarn } from '@salmon-element/utils';
-import { useFormItem, useFormDisabled, useFormItemInputId } from '../Form';
+import { useId } from '@salmon-element/hooks';
 
-defineOptions({ name: 'YisSwitch', inheritAttrs: false });
+defineOptions({
+	name: 'YisSwitch',
+	inheritAttrs: false,
+});
 const props = withDefaults(defineProps<SwitchProps>(), {
 	activeValue: true,
 	inactiveValue: false,
 });
+
 const emits = defineEmits<SwitchEmits>();
-const isDisabled = useFormDisabled();
-const { formItem } = useFormItem();
-const { inputId } = useFormItemInputId(props, formItem);
+const isDisabled = computed(() => props.disabled);
 
 const innerValue = ref(props.modelValue);
-const inputRef = ref<HTMLInputElement | null>(null);
+const inputRef = ref<HTMLInputElement>();
+const inputId = useId().value;
 const checked = computed(() => innerValue.value === props.activeValue);
 
 const focus: SwitchInstance['focus'] = function () {
 	inputRef.value?.focus();
 };
-
 function handleChange() {
 	if (isDisabled.value) return;
 
 	const newVal = checked.value ? props.inactiveValue : props.activeValue;
 
 	innerValue.value = newVal;
+
 	emits('update:modelValue', newVal);
+
 	emits('change', newVal);
 }
 
@@ -37,16 +40,13 @@ onMounted(() => {
 });
 watch(checked, val => {
 	inputRef.value!.checked = val;
-	formItem?.validate('change').catch(err => debugWarn(err));
+	// 预留 form 校验
+	formItem?.validate
 });
-watch(
-	() => props.modelValue,
-	val => (innerValue.value = val)
-);
 
 defineExpose<SwitchInstance>({
-	focus,
 	checked,
+	focus,
 });
 </script>
 
@@ -70,11 +70,10 @@ defineExpose<SwitchInstance>({
 			:disabled="isDisabled"
 			:checked="checked"
 			@keydown.enter="handleChange"
-			@blur="formItem?.validate('blur').catch(err => debugWarn(err))"
 		/>
 		<div class="yis-switch__core">
 			<div class="yis-switch__core-inner">
-				<span v-if="activeText || inactiveText" class="yis-switch__core-innyis-text">
+				<span v-if="activeText || inactiveText" class="yis-switch__core-inner-text">
 					{{ checked ? activeText : inactiveText }}
 				</span>
 			</div>
@@ -83,6 +82,6 @@ defineExpose<SwitchInstance>({
 	</div>
 </template>
 
-<style scoped>
+<style>
 @import './style.css';
 </style>

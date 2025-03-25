@@ -52,16 +52,16 @@ defineExpose<SwitchInstance>({
 
 <template>
 	<div
-		class="yis-switch"
+		class="er-switch"
 		:class="{
-			[`yis-switch--${size}`]: size,
+			[`er-switch--${size}`]: size,
 			'is-disabled': isDisabled,
 			'is-checked': checked,
 		}"
 		@click="handleChange"
 	>
 		<input
-			class="yis-switch__input"
+			class="er-switch__input"
 			type="checkbox"
 			role="switch"
 			ref="inputRef"
@@ -72,13 +72,13 @@ defineExpose<SwitchInstance>({
 			@keydown.enter="handleChange"
 			@blur="formItem?.validate('blur').catch(err => debugWarn(err))"
 		/>
-		<div class="yis-switch__core">
-			<div class="yis-switch__core-inner">
-				<span v-if="activeText || inactiveText" class="yis-switch__core-innyis-text">
+		<div class="er-switch__core">
+			<div class="er-switch__core-inner">
+				<span v-if="activeText || inactiveText" class="er-switch__core-inner-text">
 					{{ checked ? activeText : inactiveText }}
 				</span>
 			</div>
-			<div class="yis-switch__core-action"></div>
+			<div class="er-switch__core-action"></div>
 		</div>
 	</div>
 </template>

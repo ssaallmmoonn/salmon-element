@@ -16,6 +16,7 @@ export interface InputProps {
 
 export interface InputEmits {
 	(e: 'update:modelValue', value: string): void;
+
 	(e: 'input', value: string): void;
 	// 修改值且 失去焦点 才触发'change'
 	(e: 'change', value: string): void;

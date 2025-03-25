@@ -349,7 +349,7 @@ defineExpose<SelectInstance>({
 <template>
 	<div
 		ref="selectRef"
-		class="yis-select"
+		class="er-select"
 		:class="{
 			'is-disabled': isDisabled,
 		}"
@@ -382,7 +382,7 @@ defineExpose<SelectInstance>({
 							<yis-icon
 								v-if="showClear"
 								icon="circle-xmark"
-								class="yis-input__clear"
+								class="er-input__clear"
 								@click.stop="handleClear"
 								@mousedown.prevent="noop"
 							/>
@@ -397,11 +397,11 @@ defineExpose<SelectInstance>({
 				</div>
 			</template>
 			<template #content>
-				<div class="yis-select__loading" v-if="selectStates.loading">
+				<div class="er-select__loading" v-if="selectStates.loading">
 					<yis-icon icon="spinner" spin />
 				</div>
-				<div class="yis-select__nodata" v-else-if="filterable && isNoData">No data</div>
-				<ul class="yis-select__menu" v-else>
+				<div class="er-select__nodata" v-else-if="filterable && isNoData">No data</div>
+				<ul class="er-select__menu" v-else>
 					<template v-if="!hasChildren">
 						<yis-option v-for="item in filteredOptions" :key="item.value" v-bind="item" />
 					</template>

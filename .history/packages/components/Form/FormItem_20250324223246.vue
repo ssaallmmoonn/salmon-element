@@ -48,13 +48,12 @@ const props = withDefaults(defineProps<FormItemProps>(), {
 });
 const slots = defineSlots();
 const ctx = inject(FORM_CTX_KEY);
+
 const labelId = useId().value;
 const inputIds = ref<string[]>([]);
 const validateStatus: Ref<ValidateStatus> = ref('init');
 const errMsg = ref('');
 
-let initialVal: any = null;
-let isResetting: boolean = false;
 
 const getValByProp = (target: Record<string, any> | void) => {
 	if (target && props.prop && !isNil(get(target, props.prop))) {
@@ -132,6 +131,9 @@ const itemRules = computed(() => {
 
 	return rules;
 });
+
+let initialVal: any = null;
+let isResetting: boolean = false;
 
 function getTriggeredRules(trigger: string) {
 	const rules = itemRules.value;

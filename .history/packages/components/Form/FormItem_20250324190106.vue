@@ -48,13 +48,12 @@ const props = withDefaults(defineProps<FormItemProps>(), {
 });
 const slots = defineSlots();
 const ctx = inject(FORM_CTX_KEY);
+
 const labelId = useId().value;
-const inputIds = ref<string[]>([]);
+
 const validateStatus: Ref<ValidateStatus> = ref('init');
 const errMsg = ref('');
-
-let initialVal: any = null;
-let isResetting: boolean = false;
+const inputIds = ref<string[]>([]);
 
 const getValByProp = (target: Record<string, any> | void) => {
 	if (target && props.prop && !isNil(get(target, props.prop))) {
@@ -118,14 +117,14 @@ const itemRules = computed(() => {
 		);
 
 		if (size(requiredRules)) {
-			// 在rules里规定required: false的，动态修改为required: true
+			// 如果rules外层有required:true，而rules数组有些有required:true而有些没有，则需要给没有required:true的全部加上required:true
 			for (const item of requiredRules) {
 				const [rule, i] = item as [FormItemRule, number];
 				if (rule.required === required) continue;
 				rules[i] = { ...rule, required };
 			}
 		} else {
-			// 如果rules里的全部元素里没有 required 规则，添加 required 规则
+			// 如果rules里的全部没有 required 规则，添加新的 required 规则
 			rules.push({ required });
 		}
 	}
@@ -133,20 +132,20 @@ const itemRules = computed(() => {
 	return rules;
 });
 
+let initialVal: any = null;
+let isResetting: boolean = false;
+
 function getTriggeredRules(trigger: string) {
 	const rules = itemRules.value;
 	if (!rules) return [];
 
 	return filter(rules, r => {
-		// 情况1：规则没有 trigger 属性或未传入 trigger
 		if (!r?.trigger || !trigger) return true;
-		// 情况2：规则的 trigger 是数组
 		if (isArray(r.trigger)) {
 			return r.trigger.includes(trigger);
 		}
-		// 情况3：规则的 trigger 是字符串
 		return r.trigger === trigger;
-	}).map(({ trigger, ...rule }) => rule as RuleItem); //使用解构赋值去除规则中的 trigger 属性
+	}).map(({ trigger, ...rule }) => rule as RuleItem);
 }
 
 async function doValidate(rules: RuleItem[]) {
@@ -235,7 +234,7 @@ const formItemCtx: FormItemContext = reactive({
 onMounted(() => {
 	if (!props.prop) return;
 	ctx?.addField(formItemCtx);
-	initialVal = cloneDeep(innerVal.value); // 修改为深拷贝
+	initialVal = innerVal.value;
 });
 
 onUnmounted(() => {

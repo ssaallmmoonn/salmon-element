@@ -13,7 +13,6 @@ import {
 } from 'vue';
 import { useId, useProp } from '@salmon-element/hooks';
 import type { FormItemContext } from './types';
-
 export function useFormItem() {
 	const form = inject(FORM_CTX_KEY, void 0);
 	const formItem = inject(FORM_ITEM_CTX_KEY, void 0);

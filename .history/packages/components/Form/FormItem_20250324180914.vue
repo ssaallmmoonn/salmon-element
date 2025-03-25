@@ -48,13 +48,12 @@ const props = withDefaults(defineProps<FormItemProps>(), {
 });
 const slots = defineSlots();
 const ctx = inject(FORM_CTX_KEY);
+
 const labelId = useId().value;
-const inputIds = ref<string[]>([]);
+
 const validateStatus: Ref<ValidateStatus> = ref('init');
 const errMsg = ref('');
-
-let initialVal: any = null;
-let isResetting: boolean = false;
+const inputIds = ref<string[]>([]);
 
 const getValByProp = (target: Record<string, any> | void) => {
 	if (target && props.prop && !isNil(get(target, props.prop))) {
@@ -100,32 +99,28 @@ const itemRules = computed(() => {
 		rules.push(...props.rules);
 	}
 
-	// 从表单上下文中获取全局规则
+	// 添加组件自身的 rules
 	const formRules = ctx?.rules;
 	if (formRules && props.prop) {
-		const _rules = getValByProp(formRules); // 根据 props.prop 获取对应的规则
+		const _rules = getValByProp(formRules);
 		if (_rules) {
 			rules.push(..._rules);
 		}
 	}
 
-	// 动态处理 required 属性
 	if (!isNil(required)) {
 		const requiredRules = filter(
-			//将 rules 数组中的每个元素与其索引组合成一个新的数组
 			map(rules, (rule, i) => [rule, i]),
 			(item: [FormItemRule, number]) => includes(keys(item[0]), 'required')
 		);
 
 		if (size(requiredRules)) {
-			// 在rules里规定required: false的，动态修改为required: true
 			for (const item of requiredRules) {
 				const [rule, i] = item as [FormItemRule, number];
 				if (rule.required === required) continue;
 				rules[i] = { ...rule, required };
 			}
 		} else {
-			// 如果rules里的全部元素里没有 required 规则，添加 required 规则
 			rules.push({ required });
 		}
 	}
@@ -133,20 +128,20 @@ const itemRules = computed(() => {
 	return rules;
 });
 
+let initialVal: any = null;
+let isResetting: boolean = false;
+
 function getTriggeredRules(trigger: string) {
 	const rules = itemRules.value;
 	if (!rules) return [];
 
 	return filter(rules, r => {
-		// 情况1：规则没有 trigger 属性或未传入 trigger
 		if (!r?.trigger || !trigger) return true;
-		// 情况2：规则的 trigger 是数组
 		if (isArray(r.trigger)) {
 			return r.trigger.includes(trigger);
 		}
-		// 情况3：规则的 trigger 是字符串
 		return r.trigger === trigger;
-	}).map(({ trigger, ...rule }) => rule as RuleItem); //使用解构赋值去除规则中的 trigger 属性
+	}).map(({ trigger, ...rule }) => rule as RuleItem);
 }
 
 async function doValidate(rules: RuleItem[]) {
@@ -235,7 +230,7 @@ const formItemCtx: FormItemContext = reactive({
 onMounted(() => {
 	if (!props.prop) return;
 	ctx?.addField(formItemCtx);
-	initialVal = cloneDeep(innerVal.value); // 修改为深拷贝
+	initialVal = innerVal.value;
 });
 
 onUnmounted(() => {

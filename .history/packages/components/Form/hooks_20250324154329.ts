@@ -13,7 +13,6 @@ import {
 } from 'vue';
 import { useId, useProp } from '@salmon-element/hooks';
 import type { FormItemContext } from './types';
-
 export function useFormItem() {
 	const form = inject(FORM_CTX_KEY, void 0);
 	const formItem = inject(FORM_ITEM_CTX_KEY, void 0);
@@ -37,33 +36,32 @@ export function useFormItemInputId(
 	props: UseFormItemInputCommenProps,
 	formItemContext?: FormItemContext
 ) {
-	const inputId = ref<string>(''); // 存储当前输入元素的唯一 ID
-	let unwatch: WatchStopHandle | void; // 用于存储 watch 的停止函数
+	const inputId = ref<string>('');
+	let unwatch: WatchStopHandle | void;
 
 	onMounted(() => {
 		unwatch = watch(
-			toRef(() => props.id), // 监听 props.id 的变化
+			toRef(() => props.id),
 			id => {
-				const newId = id ?? useId().value; // 如果 props.id 存在，使用它；否则生成一个唯一 ID
+				const newId = id ?? useId().value;
 				if (newId !== inputId.value) {
-					// 如果新 ID 与当前 ID 不同
-					inputId.value && formItemContext?.removeInputId(inputId.value); // 从上下文中移除旧 ID
-					formItemContext?.addInputId(newId); // 将新 ID 添加到上下文中
-					inputId.value = newId; // 更新 inputId 的值
+					inputId.value && formItemContext?.removeInputId(inputId.value);
+					formItemContext?.addInputId(newId);
+					inputId.value = newId;
 				}
 			},
 			{
-				immediate: true, // 立即执行回调
+				immediate: true,
 			}
 		);
 	});
 
 	onUnmounted(() => {
-		unwatch && unwatch(); // 停止监听
-		inputId.value && formItemContext?.removeInputId(inputId.value); // 从上下文中移除当前 ID
+		unwatch && unwatch();
+		inputId.value && formItemContext?.removeInputId(inputId.value);
 	});
 
 	return {
-		inputId, // 返回响应式的 inputId
+		inputId,
 	};
 }

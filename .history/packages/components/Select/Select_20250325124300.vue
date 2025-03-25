@@ -100,7 +100,7 @@ const highlightedLine = computed(() => {
 	return result;
 });
 
-const children = computed(() => filter(slots?.default?.(), child => eq(child.type, YisOption)));
+const children = computed(() => filter(slots?.default?.(), child => eq(child.type, ErOption)));
 
 const hasChildren = computed(() => size(children.value) > 0);
 const childrenOptsions = computed(() => {
@@ -349,7 +349,7 @@ defineExpose<SelectInstance>({
 <template>
 	<div
 		ref="selectRef"
-		class="yis-select"
+		class="er-select"
 		:class="{
 			'is-disabled': isDisabled,
 		}"
@@ -357,7 +357,7 @@ defineExpose<SelectInstance>({
 		@mouseenter="selectStates.mouseHover = true"
 		@mouseleave="selectStates.mouseHover = false"
 	>
-		<yis-tooltip
+		<er-tooltip
 			ref="tooltipRef"
 			placement="bottom-start"
 			:popper-options="POPPER_OPTIONS"
@@ -366,7 +366,7 @@ defineExpose<SelectInstance>({
 		>
 			<template #default>
 				<div ref="inputWrapperRef">
-					<yis-input
+					<er-input
 						ref="inputRef"
 						v-model="selectStates.inputValue"
 						:id="inputId"
@@ -379,31 +379,31 @@ defineExpose<SelectInstance>({
 						@keydown="handleKeyDown"
 					>
 						<template #suffix>
-							<yis-icon
+							<er-icon
 								v-if="showClear"
 								icon="circle-xmark"
-								class="yis-input__clear"
+								class="er-input__clear"
 								@click.stop="handleClear"
 								@mousedown.prevent="noop"
 							/>
-							<yis-icon
+							<er-icon
 								v-else
 								class="header-angle"
 								icon="angle-down"
 								:class="{ 'is-active': isDropdownVisible }"
 							/>
 						</template>
-					</yis-input>
+					</er-input>
 				</div>
 			</template>
 			<template #content>
-				<div class="yis-select__loading" v-if="selectStates.loading">
-					<yis-icon icon="spinner" spin />
+				<div class="er-select__loading" v-if="selectStates.loading">
+					<er-icon icon="spinner" spin />
 				</div>
-				<div class="yis-select__nodata" v-else-if="filterable && isNoData">No data</div>
-				<ul class="yis-select__menu" v-else>
+				<div class="er-select__nodata" v-else-if="filterable && isNoData">No data</div>
+				<ul class="er-select__menu" v-else>
 					<template v-if="!hasChildren">
-						<yis-option v-for="item in filteredOptions" :key="item.value" v-bind="item" />
+						<er-option v-for="item in filteredOptions" :key="item.value" v-bind="item" />
 					</template>
 					<template v-else>
 						<template v-for="[vNode, _props] in filteredChilds" :key="_props.value">
@@ -412,7 +412,7 @@ defineExpose<SelectInstance>({
 					</template>
 				</ul>
 			</template>
-		</yis-tooltip>
+		</er-tooltip>
 	</div>
 </template>
 
