@@ -161,7 +161,7 @@ watch(
 		openDebounce?.cancel();
 		visible.value = false;
 		emits('visible-change', false);
-		resetEvents();
+		resetEvents(0);
 	}
 );
 

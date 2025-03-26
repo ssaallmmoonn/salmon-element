@@ -98,6 +98,7 @@ function setVisible(val: boolean) {
 
 function attachEvents() {
 	if (props.disabled || props.manual) return;
+
 	triggerStrategyMap.get(props.trigger)?.();
 }
 
@@ -147,17 +148,6 @@ watch(
 watch(
 	() => props.trigger,
 	() => {
-		openDebounce?.cancel();
-		visible.value = false;
-		emits('visible-change', false);
-		resetEvents();
-	}
-);
-
-watch(
-	() => props.disabled,
-	(val, oldValue) => {
-		if (val === oldValue) return;
 		openDebounce?.cancel();
 		visible.value = false;
 		emits('visible-change', false);

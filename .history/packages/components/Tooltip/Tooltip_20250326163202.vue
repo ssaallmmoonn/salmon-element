@@ -91,13 +91,16 @@ function togglePopper() {
 }
 
 function setVisible(val: boolean) {
-	if (props.disabled) return;
+	if (props.disabled) {
+		 return;
+	}
 	visible.value = val;
 	emits('visible-change', val);
 }
 
 function attachEvents() {
 	if (props.disabled || props.manual) return;
+
 	triggerStrategyMap.get(props.trigger)?.();
 }
 
@@ -147,17 +150,6 @@ watch(
 watch(
 	() => props.trigger,
 	() => {
-		openDebounce?.cancel();
-		visible.value = false;
-		emits('visible-change', false);
-		resetEvents();
-	}
-);
-
-watch(
-	() => props.disabled,
-	(val, oldValue) => {
-		if (val === oldValue) return;
 		openDebounce?.cancel();
 		visible.value = false;
 		emits('visible-change', false);

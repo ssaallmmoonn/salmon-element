@@ -91,13 +91,20 @@ function togglePopper() {
 }
 
 function setVisible(val: boolean) {
-	if (props.disabled) return;
+	if (props.disabled) {
+		// if (visible.value) {
+		// 	visible.value = false;
+		// 	emits('visible-change', val);
+		// }
+		return;
+	}
 	visible.value = val;
 	emits('visible-change', val);
 }
 
 function attachEvents() {
 	if (props.disabled || props.manual) return;
+
 	triggerStrategyMap.get(props.trigger)?.();
 }
 
@@ -134,6 +141,20 @@ watch(
 );
 
 watch(
+	() => props.disabled,
+	isDisabled => {
+		if (isDisabled) {
+			// 禁用时隐藏提示并重置事件
+			visible.value = false;
+			resetEvents();
+		} else {
+			// 启用时重新绑定事件
+			attachEvents();
+		}
+	}
+);
+
+watch(
 	() => props.manual,
 	isManual => {
 		if (isManual) {
@@ -147,17 +168,6 @@ watch(
 watch(
 	() => props.trigger,
 	() => {
-		openDebounce?.cancel();
-		visible.value = false;
-		emits('visible-change', false);
-		resetEvents();
-	}
-);
-
-watch(
-	() => props.disabled,
-	(val, oldValue) => {
-		if (val === oldValue) return;
 		openDebounce?.cancel();
 		visible.value = false;
 		emits('visible-change', false);

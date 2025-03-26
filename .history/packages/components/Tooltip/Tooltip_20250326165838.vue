@@ -158,10 +158,7 @@ watch(
 	() => props.disabled,
 	(val, oldValue) => {
 		if (val === oldValue) return;
-		openDebounce?.cancel();
-		visible.value = false;
-		emits('visible-change', false);
-		resetEvents();
+		open
 	}
 );
 
