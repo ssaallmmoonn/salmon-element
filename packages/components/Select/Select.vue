@@ -73,7 +73,7 @@ const selectStates = reactive<SelectStates>({
 	selectedOption: initialOption,
 	mouseHover: false,
 	loading: false,
-	highlightedIndex: -1,
+	highlightedIndex: -1, // 是用于控制键盘导航高亮项的索引值
 });
 
 const slots = useSlots();

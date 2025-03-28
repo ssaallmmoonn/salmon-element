@@ -122,6 +122,7 @@ const hide: TooltipInstance['hide'] = function () {
 	setVisible(false);
 };
 
+// watch visible
 watch(
 	visible,
 	val => {
@@ -133,6 +134,7 @@ watch(
 	{ flush: 'post' }
 );
 
+// watch props.manual
 watch(
 	() => props.manual,
 	isManual => {
@@ -144,6 +146,7 @@ watch(
 	}
 );
 
+// watch props.trigger
 watch(
 	() => props.trigger,
 	() => {
@@ -154,6 +157,7 @@ watch(
 	}
 );
 
+// watch props.disabled
 watch(
 	() => props.disabled,
 	(val, oldValue) => {

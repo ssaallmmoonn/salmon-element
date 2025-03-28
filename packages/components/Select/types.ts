@@ -11,17 +11,17 @@ export interface SelectOptionProps {
 }
 
 export interface SelectProps {
-	modelValue: string;
+	modelValue: string; // input标签里绑定得值
 	id?: string;
-	options?: SelectOptionProps[];
+	options?: SelectOptionProps[]; // 可选项数组
 	placeholder?: string;
 	disabled?: boolean;
 	clearable?: boolean;
-	renderLabel?: RenderLabelFunc;
-	filterable?: boolean;
-	filterMethod?: CustomFilterFunc;
-	remote?: boolean;
-	remoteMethod?: CustomFilterRemoteFunc;
+	renderLabel?: RenderLabelFunc; // 自定义渲染函数
+	filterable?: boolean; // 是否可搜索，为 true 时可输入关键字过滤选项
+	filterMethod?: CustomFilterFunc; // 自定义过滤方法
+	remote?: boolean; // 是否为远程搜索
+	remoteMethod?: CustomFilterRemoteFunc; // 远程搜索方法
 }
 
 export interface SelectStates {

@@ -3,11 +3,11 @@ import { resolve } from 'path';
 import { filter, includes, map, delay, defer } from 'lodash-es';
 import { readdir, readdirSync } from 'fs';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { hooksPlugin as hooks } from '@salmon-element/vite-plugins';
 
 import shell from 'shelljs';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
-import { hooksPlugin as hooks } from '@salmon-element/vite-plugins';
 import terser from '@rollup/plugin-terser';
 
 const isProd = process.env.NODE_ENV === 'production';
